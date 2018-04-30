@@ -89,7 +89,7 @@ class Heuristic:
     # Evaluation for Alpha-Beta algorithm
     def evaluate(self, board, player1 = "O"):
         # Init evaluate function
-        player2 = "X" if player1=="O" else "O"
+        player2 = "X" if player1 == "O" else "O"
         # 138 * 2 = Entire block's sum in the evalutaion table
         utility = 138
 

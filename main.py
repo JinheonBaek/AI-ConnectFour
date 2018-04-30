@@ -1,5 +1,5 @@
 import board as connect_four
-import rule 
+import rule as connect_four_rule
 import heuristic as connect_four_heuristic
 import nn
 
@@ -7,7 +7,8 @@ def main():
     # Init Board
     board = connect_four.Board()
 
-    # Init Heuristic
+    # Init Rule, Heuristic
+    rule = connect_four_rule.Rule()
     heuristic = connect_four_heuristic.Heuristic()
 
     # Init Values
@@ -50,7 +51,7 @@ def main():
             # Computer Run Mode (Rule / Heuristic / Neural Network)
             if mode == 1:
                 # Rule base
-                break
+                rule.make_move(board)
             elif mode == 2:
                 # Heuristic base
                 heuristic.make_ab_move(board)
