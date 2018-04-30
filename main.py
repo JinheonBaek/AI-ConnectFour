@@ -38,6 +38,12 @@ def main():
             # Change turn
             users_turn = not users_turn
         else:
+            # First move condition (do not put in middle col)
+            if free_cells == 42:
+                firstMove(board)
+                users_turn = not users_turn
+                continue
+
             # Computer turn
             mode = getMode()
             
@@ -90,6 +96,10 @@ def winner(board):
     if board.check(board.get(), "O", 4)>0:
         return "O"
     return ""
+
+# Make First Move (Assignment Condition: At first move, do not put in middle col)
+def firstMove(board):
+    board.insert(board.get(), 3, "O")
 
 # Gets Compurse's play mode
 def getMode():
