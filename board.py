@@ -1,9 +1,37 @@
+import pandas as pd
+
 class Board:
     def __init__(self):
         self.board = [ [ " ", " ", " ", " ", " ", " "," "], [ " ", " ", " ", " "," ", " ", " "], [ " ", " ", " ", " ", " ", " ", " "], [ " ", " ", " ", " ", " ", " ", " "], [ " ", " ", " ", " ", " ", " ", " "], [ " ", " ", " ", " ", " ", " ", " "] ]
 
+    # Gets board date in list type
     def get(self):
         return self.board
+
+    # Gets board data in PD type (for ML)
+    def getData(self):
+        data = []
+        
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                data.append(self.board[i][j])
+
+        data = pd.DataFrame(data = data).T
+
+        data[data == "X"] = 1
+        data[data == " "] = 0
+        data[data == "O"] = -1
+
+        width = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        height = range(1, 7)
+        cols = []
+
+        for i in width:
+            for j in height:
+                cols.append(i + str(j))
+        data.columns = cols
+
+        return data
 
     # Displays the game
     def display(self):

@@ -1,15 +1,16 @@
 import board as connect_four
 import rule as connect_four_rule
 import heuristic as connect_four_heuristic
-import nn
+# import nn
 
 def main():
     # Init Board
     board = connect_four.Board()
 
-    # Init Rule, Heuristic
+    # Init Rule, Heuristic, NN_heuristic
     rule = connect_four_rule.Rule()
     heuristic = connect_four_heuristic.Heuristic()
+    NN_heuristic = connect_four_heuristic.NN_Heuristic()
 
     # Init Values
     free_cells = 42
@@ -56,8 +57,8 @@ def main():
                 # Heuristic base
                 heuristic.make_ab_move(board)
             else:
-                # Neural Network base
-                break
+                # Neural Network Heuristic base
+                NN_heuristic.make_ab_move(board)
 
             # Change turn
             users_turn = not users_turn
