@@ -49,11 +49,11 @@ class Board:
         print ("6: " + self.board[5][0] + " | " + self.board[5][1] + " | " + self.board[5][2] + " | " + self.board[5][3] + " | " + self.board[5][4] + " | " + self.board[5][5] + " | " + self.board[5][6] + " | ")
         print ("")
 
-    # Checks for winner
+    # Checks for connected node
     ## board : Board Info
     ## symbol : O or X to check who is winner
-    ## winNum : inin is 4 (connection num)
-    def check(self, board, symbol, winNum):
+    ## connectNum : check existence of connected node's number on particular symbol
+    def check(self, board, symbol, connectNum):
         width = len(board[0])
         height = len(board)
         ret = 0
@@ -65,8 +65,8 @@ class Board:
                     tmp = tmp + 1
                 else:
                     tmp = 0
-                if tmp >= winNum:
-                        ret = ret + 1
+                if tmp >= connectNum:
+                    ret = ret + 1
 
         for i in range(width):
             tmp = 0
@@ -75,24 +75,24 @@ class Board:
                     tmp = tmp + 1
                 else:
                     tmp = 0
-                if tmp >= winNum:
-                        ret = ret + 1
+                if tmp >= connectNum:
+                    ret = ret + 1
 
-        sub = winNum - 1
+        sub = connectNum - 1
 
         for i in range(height-1, sub-1, -1):
             for j in range(0, width-sub, 1):
                 tmp = 0
-                for t in range(winNum):
+                for t in range(connectNum):
                     if(board[i-t][j+t] == symbol): tmp = tmp + 1
-                if tmp == winNum: ret = ret + 1
+                if tmp == connectNum: ret = ret + 1
 
         for i in range(height-1, sub-1, -1):
             for j in range(width-1, sub-1, -1):
                 tmp = 0
-                for t in range(winNum):
+                for t in range(connectNum):
                     if(board[i-t][j-t] == symbol): tmp = tmp + 1
-                if tmp == winNum: ret = ret + 1
+                if tmp == connectNum: ret = ret + 1
 
         return ret
 
