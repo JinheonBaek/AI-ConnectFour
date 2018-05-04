@@ -5,7 +5,6 @@ class Rule:
         while not valid_move:
             col, rule_num = self.rule(board, sym)
             print("Rule : Rule", rule_num, "is applied")
-            board.display()
             valid_move = board.insert(board.get(), col, sym, _print = True)
 
     def rule(self, board, player = "O"):
