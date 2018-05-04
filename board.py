@@ -105,6 +105,7 @@ class Board:
                 for row in range (6,0,-1):
                     if (1 <= row <= 6) and (board[row-1][col-1] == " "):
                         board[row-1][col-1] = symbol
+                        valid_move = True
                         return True
         else:
             print ("Sorry, invalid input. Please try again!\n")
