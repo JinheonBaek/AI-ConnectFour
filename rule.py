@@ -4,14 +4,11 @@ class Rule:
         col = self.rule(board, sym)
         board.insert(board.get(), col, sym)
     
-    ## 3개 판단
-    ## BFS 이용
-    
     def rule(self, board, player = "O"):
         # Init
         curValue = 0
         maxValue = 0
-        bestStep = 3
+        bestStep = 4
 
         next_player = "X" if player == "O" else "O"
         
@@ -60,8 +57,13 @@ class Rule:
 
         # Rule 4 (내가 Row 상에 연속된 3개의 돌을 두기)
         # Rule 4 (Rule 3 과 비슷한 아이디어에서 도출, 내가 유리한 조건 끌어내기)
+        # Rule 4 (Add double check condition)
         for step in steps:
             board.insert(board.get(), step, player)
+
+            if self.double_check(board, step, player):
+                board.uninsert(board.get(), step, player)
+                continue
 
             if self.row_check(board.get(), step, player, 3) > 0:
                 board.uninsert(board.get(), step, player)
@@ -70,11 +72,16 @@ class Rule:
             board.uninsert(board.get(), step, player)
 
         # Rule 5 (Some eval function)
+        # Rule 5 (Add double check condition)
         steps = self.poss_steps(board.get())
         
         for step in steps:
             board.insert(board.get(), step, player)
             
+            if self.double_check(board, step, player):
+                board.uninsert(board.get(), step, player)
+                continue
+
             curValue = self.evaluate(board, player)
 
             if curValue >= maxValue :
@@ -90,7 +97,7 @@ class Rule:
         height = -1
 
         # Finds step columns's height (0 is top / 5 is bottom in board index)
-        # Height is 5, 0 ~ 4 indexes on that column is free
+        # Ex) Height is 5, 0 ~ 4 indexes on that column is free
         for i in range(len(board)):
             if board[5 - i][step - 1] == " ":
                 height = 6 - i
@@ -117,6 +124,23 @@ class Rule:
             return 1
         
         return 0
+
+    # Prevent next player's winning condition
+    # Below is description about rule
+    # Player puts stone on some column
+    # If next player puts stone on same column, and win, it will lead to our lose
+    # So prevent this condition to check before putting stone
+    def double_check(self, board, step, player):
+        next_player = "X" if player == "O" else "O"
+
+        board.insert(board.get(), step, next_player)
+
+        if board.check(board.get(), next_player, 4) > 0:
+            board.uninsert(board.get(), step, next_player)
+            return True
+
+        board.uninsert(board.get(), step, next_player)
+        return False
 
     # Rule evaluate function
     # 내가 돌을 놓은 다음 상황에서,
