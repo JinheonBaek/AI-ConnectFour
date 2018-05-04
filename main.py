@@ -4,13 +4,23 @@ import heuristic as connect_four_heuristic
 # import nn
 
 def main():
+    print("--------------------------------------")
+    print("-----     Connect Four           -----")
     # Init Board
+    print("-----     Init Board             -----")
     board = connect_four.Board()
 
     # Init Rule, Heuristic, NN_heuristic
+    print("-----     Load Rule              -----")
     rule = connect_four_rule.Rule()
+    print("-----     Load Heuristic         -----")
     heuristic = connect_four_heuristic.Heuristic()
+    print("-----     Load NN_Heuristic      -----")
     NN_heuristic = connect_four_heuristic.NN_Heuristic()
+    
+    print("-----     Load All, Play game!   -----")
+    print("--------------------------------------")
+    print("")
 
     # Init Values
     free_cells = 42
@@ -28,10 +38,9 @@ def main():
 
     # Play game
     while not winner(board) and (free_cells > 0):
-        
         # Display board
         board.display()
-        
+
         # User turn or Computer turn
         if users_turn:
             # User turn
@@ -79,6 +88,10 @@ def main():
 
 # Gets user input and makes a move.
 def make_user_move(board):
+    print("--------------------------------------")
+    print("---      Your turn                 ---")
+    print("--------------------------------------")
+    
     while True:
         try:
             col = input("What col would you like to move to (1-7):")
@@ -89,7 +102,7 @@ def make_user_move(board):
 
     valid_move = False
     while not valid_move:
-        valid_move = board.insert(board.get(), col, "X")
+        valid_move = board.insert(board.get(), col, "X", _print = True)
 
 # Returns a winner (if there is one) for a given game.
 def winner(board):
@@ -101,13 +114,17 @@ def winner(board):
 
 # Make First Move (Assignment Condition: At first move, do not put in middle col)
 def firstMove(board):
-    board.insert(board.get(), 3, "O")
+    print("First move")
+    board.insert(board.get(), 3, "O", _print = True)
 
 # Gets Compurse's play mode
 def getMode():
-    print("Mode 1 : Rule base")
-    print("Mode 2 : Heuristic Method")
-    print("Mode 3 : Neural Network Method")
+    print("--------------------------------------")
+    print("--- AI's turn                      ---")
+    print("--- Mode 1 : Rule base             ---")
+    print("--- Mode 2 : Heuristic Method      ---")
+    print("--- Mode 3 : Neural Network Method ---")
+    print("--------------------------------------")
 
     while True:
         try:

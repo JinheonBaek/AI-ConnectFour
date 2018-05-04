@@ -18,7 +18,7 @@ class Heuristic:
         valid_move = False
         while not valid_move:
             col = self.minmax(board, self.depth, sym)[1]
-            valid_move = board.insert(board.get(), col, sym)
+            valid_move = board.insert(board.get(), col, sym, _print = True)
 
     # Started as MinMax using Alpha-Beta search
     def minmax(self, board, depth, player, maximizingPlayer = True, alpha = -9999, beta = 9999):
@@ -137,7 +137,7 @@ class NN_Heuristic:
         valid_move = False
         while not valid_move:
             col = self.minmax(board, self.depth, sym)[1]
-            valid_move = board.insert(board.get(), col, sym)
+            valid_move = board.insert(board.get(), col, sym, _print = True)
 
     # Started as MinMax using Alpha-Beta search
     def minmax(self, board, depth, player, maximizingPlayer = True, alpha = -9999, beta = 9999):

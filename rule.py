@@ -1,8 +1,10 @@
 class Rule:
     # Computer's Symbol: O
     def make_move(self, board, sym = "O"):
-        col = self.rule(board, sym)
-        board.insert(board.get(), col, sym)
+        valid_move = False
+        while not valid_move:
+            col = self.rule(board, sym)
+            valid_move = board.insert(board.get(), col, sym, _print = True)
     
     def rule(self, board, player = "O"):
         # Init

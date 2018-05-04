@@ -36,17 +36,17 @@ class Board:
     # Displays the game
     def display(self):
         print ("   1   2   3   4    5   6   7")
-        print ("1: " + self.board[0][0] + " | " + self.board[0][1] + " | " + self.board[0][2] + " | " + self.board[0][3] + " | " + self.board[0][4] + " | " + self.board[0][5] + " | " + self.board[0][6] + " | ")
+        print ("6: " + self.board[0][0] + " | " + self.board[0][1] + " | " + self.board[0][2] + " | " + self.board[0][3] + " | " + self.board[0][4] + " | " + self.board[0][5] + " | " + self.board[0][6] + " | ")
         print ("  ---+---+---+---+---+---+---")
-        print ("2: " + self.board[1][0] + " | " + self.board[1][1] + " | " + self.board[1][2] + " | " + self.board[1][3] + " | " + self.board[1][4] + " | " + self.board[1][5] + " | " + self.board[1][6] + " | ")
+        print ("5: " + self.board[1][0] + " | " + self.board[1][1] + " | " + self.board[1][2] + " | " + self.board[1][3] + " | " + self.board[1][4] + " | " + self.board[1][5] + " | " + self.board[1][6] + " | ")
         print ("  ---+---+---+---+---+---+---+")
-        print ("3: " + self.board[2][0] + " | " + self.board[2][1] + " | " + self.board[2][2] + " | " + self.board[2][3] + " | " + self.board[2][4] + " | " + self.board[2][5] + " | " + self.board[2][6] + " | ")
+        print ("4: " + self.board[2][0] + " | " + self.board[2][1] + " | " + self.board[2][2] + " | " + self.board[2][3] + " | " + self.board[2][4] + " | " + self.board[2][5] + " | " + self.board[2][6] + " | ")
         print ("  ---+---+---+---+---+---+---+")
-        print ("4: " + self.board[3][0] + " | " + self.board[3][1] + " | " + self.board[3][2] + " | " + self.board[3][3] + " | " + self.board[3][4] + " | " + self.board[3][5] + " | " + self.board[3][6] + " | ")
+        print ("3: " + self.board[3][0] + " | " + self.board[3][1] + " | " + self.board[3][2] + " | " + self.board[3][3] + " | " + self.board[3][4] + " | " + self.board[3][5] + " | " + self.board[3][6] + " | ")
         print ("  ---+---+---+---+---+---+---+")
-        print ("5: " + self.board[4][0] + " | " + self.board[4][1] + " | " + self.board[4][2] + " | " + self.board[4][3] + " | " + self.board[4][4] + " | " + self.board[4][5] + " | " + self.board[4][6] + " | ")
+        print ("2: " + self.board[4][0] + " | " + self.board[4][1] + " | " + self.board[4][2] + " | " + self.board[4][3] + " | " + self.board[4][4] + " | " + self.board[4][5] + " | " + self.board[4][6] + " | ")
         print ("  ---+---+---+---+---+---+---+")
-        print ("6: " + self.board[5][0] + " | " + self.board[5][1] + " | " + self.board[5][2] + " | " + self.board[5][3] + " | " + self.board[5][4] + " | " + self.board[5][5] + " | " + self.board[5][6] + " | ")
+        print ("1: " + self.board[5][0] + " | " + self.board[5][1] + " | " + self.board[5][2] + " | " + self.board[5][3] + " | " + self.board[5][4] + " | " + self.board[5][5] + " | " + self.board[5][6] + " | ")
         print ("")
 
     # Checks for connected node
@@ -97,19 +97,19 @@ class Board:
         return ret
 
     # Do a move
-    def insert(self, board, col, symbol):
+    def insert(self, board, col, symbol, _print = False):
         
         valid_move = False
         if(1 <= col <= 7):
             while not valid_move:
-                for row in range (6,0,-1):
+                for row in range (6, 0, -1):
                     if (1 <= row <= 6) and (board[row-1][col-1] == " "):
                         board[row-1][col-1] = symbol
-                        valid_move = True
+                        if (_print == True): print("Put stone on (", 7 - row, ",", col, ")")
                         return True
         else:
             print ("Sorry, invalid input. Please try again!\n")
-        return False
+            return False
 
     # Undo a move
     def uninsert(self, board, col, symbol):
