@@ -3,7 +3,7 @@ import pickle
 class Heuristic:
     def __init__(self):
         # Alpha-Beta depth
-        self.depth = 7
+        self.depth = 6
         # This heuristic assigns each field the number of possible connections with itself and size 4
         self.evaluationTable = [[3, 4, 5, 7, 5, 4, 3], 
                                 [ 4, 6, 8, 10, 8, 6, 4],
@@ -93,7 +93,7 @@ class Heuristic:
         # Init evaluate function
         player2 = "X" if player1 == "O" else "O"
         # 138 * 2 = Entire block's sum in the evalutaion table
-        utility = 138
+        utility = 300
 
         # Check first if connections with size 4 exist
         if board.check(board.get(), player1, 4) > 0:
@@ -103,16 +103,24 @@ class Heuristic:
         if board.check(board.get(), player2, 4) > 0:
             return -2 * utility
 
-        board = board.get()
+        tmp_board = board.get()
         # If not, use heuristic
         sum = 0
         for i in [0,1,2,3,4,5]:
             for j in [0,1,2,3,4,5,6]:
-                if (board[i][j] == player1):
+                if (tmp_board[i][j] == player1):
                     sum += self.evaluationTable[i][j]
                 else:
-                    if (board[i][j] == player2):
+                    if (tmp_board[i][j] == player2):
                         sum -= self.evaluationTable[i][j]
+
+        # 내가 돌을 놓은 다음 상황에서,
+        # 1) 내 돌이 3개 연속인 경우 * 3 의 Weight 를 준다
+        # 2) 상대방의 돌이 2개 연속인 경우 * 3 의 - Weight 를 준다. (상대방이 돌을 놓아 3개가 만들어질 경우에 대해 미리 방지)
+        # 3) 내 돌이 2개 연속인 경우 * 1 의 Weight 를 준다.
+        sum += board.check(board.get(), player1, 3) * 3 + board.check(board.get(), player1, 2) * 1
+        sum -= board.check(board.get(), player2, 2) * 3
+
         return sum
 
     # Returns a list with free rows
@@ -126,7 +134,7 @@ class Heuristic:
 class NN_Heuristic:
     def __init__(self):
         # Alpha-Beta depth
-        self.depth = 5
+        self.depth = 6
 
         # Load MLP Classifier
         self.MLP_classifier = pickle.load(open('model/MLP.data', 'rb'))

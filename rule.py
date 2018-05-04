@@ -10,7 +10,7 @@ class Rule:
     def rule(self, board, player = "O"):
         # Init
         curValue = 0
-        maxValue = 0
+        maxValue = -1000
         bestStep = -1
 
         next_player = "X" if player == "O" else "O"
@@ -63,7 +63,7 @@ class Rule:
         # Rule 4 (Add double check condition)
         for step in steps:
             board.insert(board.get(), step, player)
-            board.display()
+            
             if self.double_check(board, step, player):
                 board.uninsert(board.get(), step, player)
                 continue
@@ -159,9 +159,6 @@ class Rule:
 
         value = board.check(board.get(), player, 3) * 3 + board.check(board.get(), player, 2) * 1
         value -= board.check(board.get(), next_player, 2) * 3
-        
-        if value < 0:
-            value = 0
 
         return value
 
