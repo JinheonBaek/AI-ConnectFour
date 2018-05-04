@@ -143,6 +143,7 @@ class Rule:
             return False
 
         if board.check(board.get(), next_player, 4) > 0:
+            print("Rule : double check condition")
             board.uninsert(board.get(), step, next_player)
             return True
 

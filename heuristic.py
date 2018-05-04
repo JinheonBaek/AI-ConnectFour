@@ -2,7 +2,7 @@ import pickle
 
 class Heuristic:
     def __init__(self):
-        # Alpha-Beta depth
+        # Alpha-Beta depth, that should be even number
         self.depth = 6
         # This heuristic assigns each field the number of possible connections with itself and size 4
         self.evaluationTable = [[3, 4, 5, 7, 5, 4, 3], 
@@ -133,7 +133,7 @@ class Heuristic:
 
 class NN_Heuristic:
     def __init__(self):
-        # Alpha-Beta depth
+        # Alpha-Beta depth, that should be even number
         self.depth = 6
 
         # Load MLP Classifier
