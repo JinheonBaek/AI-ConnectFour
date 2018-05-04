@@ -98,8 +98,8 @@ class Board:
 
     # Do a move
     def insert(self, board, col, symbol, _print = False):
-        
         valid_move = False
+        
         if(1 <= col <= 7):
             while not valid_move:
                 for row in range (6, 0, -1):
@@ -107,9 +107,10 @@ class Board:
                         board[row-1][col-1] = symbol
                         if (_print == True): print("Put stone on (", 7 - row, ",", col, ")")
                         return True
+                return False
         else:
             print ("Sorry, invalid input. Please try again!\n")
-            return False
+        return False
 
     # Undo a move
     def uninsert(self, board, col, symbol):

@@ -3,14 +3,16 @@ class Rule:
     def make_move(self, board, sym = "O"):
         valid_move = False
         while not valid_move:
-            col = self.rule(board, sym)
+            col, rule_num = self.rule(board, sym)
+            print("Rule : Rule", rule_num, "is applied")
+            board.display()
             valid_move = board.insert(board.get(), col, sym, _print = True)
-    
+
     def rule(self, board, player = "O"):
         # Init
         curValue = 0
         maxValue = 0
-        bestStep = 4
+        bestStep = -1
 
         next_player = "X" if player == "O" else "O"
         
@@ -23,7 +25,7 @@ class Rule:
 
             if board.check(board.get(), player, 4) > 0:
                 board.uninsert(board.get(), step, player)
-                return step
+                return step, 1
             
             board.uninsert(board.get(), step, player)
 
@@ -36,7 +38,7 @@ class Rule:
 
             if board.check(board.get(), next_player, 4) > 0:
                 board.uninsert(board.get(), step, next_player)
-                return step
+                return step, 2
 
             board.uninsert(board.get(), step, next_player)
 
@@ -50,7 +52,7 @@ class Rule:
 
             if self.row_check(board.get(), step, next_player, 3) > 0:
                 board.uninsert(board.get(), step, next_player)
-                return step
+                return step, 3
 
             board.uninsert(board.get(), step, next_player)
 
@@ -62,17 +64,17 @@ class Rule:
         # Rule 4 (Add double check condition)
         for step in steps:
             board.insert(board.get(), step, player)
-
+            board.display()
             if self.double_check(board, step, player):
                 board.uninsert(board.get(), step, player)
                 continue
 
             if self.row_check(board.get(), step, player, 3) > 0:
                 board.uninsert(board.get(), step, player)
-                return step
+                return step, 4
 
             board.uninsert(board.get(), step, player)
-
+        
         # Rule 5 (Some eval function)
         # Rule 5 (Add double check condition)
         steps = self.poss_steps(board.get())
@@ -92,7 +94,7 @@ class Rule:
 
             board.uninsert(board.get(), step, player)
 
-        return bestStep
+        return bestStep, 5
     
     def row_check(self, board, step, symbol, connectNum):
         # Init
@@ -133,9 +135,13 @@ class Rule:
     # If next player puts stone on same column, and win, it will lead to our lose
     # So prevent this condition to check before putting stone
     def double_check(self, board, step, player):
-        next_player = "X" if player == "O" else "O"
+        next_player = "O" if player == "X" else "X"
 
-        board.insert(board.get(), step, next_player)
+        valid_move = board.insert(board.get(), step, next_player)
+        
+        # If board do not have space to put stone on column, just return False 
+        if valid_move == False:
+            return False
 
         if board.check(board.get(), next_player, 4) > 0:
             board.uninsert(board.get(), step, next_player)
@@ -155,6 +161,9 @@ class Rule:
         value = board.check(board.get(), player, 3) * 3 + board.check(board.get(), player, 2) * 1
         value -= board.check(board.get(), next_player, 2) * 3
         
+        if value < 0:
+            value = 0
+
         return value
 
     # Returns a list with free rows
