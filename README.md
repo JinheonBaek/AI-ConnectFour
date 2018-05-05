@@ -5,6 +5,12 @@
 Connect four AI Model, </br>
 Made by 라건우(Geonu La) / 백진헌(Jinheon Baek) / 태영준(Yeongjun Tae)
 
+## Prerequisites
+* Python (>= 3.6)
+* pandas
+* pickle
+* Maybe more, just use pip install if you get an error.
+
 ## Our Approach
 1. Rule Base
 2. Heuristic (Minmax, Alpha-Beta Pruning)
