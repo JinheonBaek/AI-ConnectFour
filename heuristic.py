@@ -23,7 +23,7 @@ class Heuristic:
     # Started as MinMax using Alpha-Beta search
     def minmax(self, board, depth, player, maximizingPlayer = True, alpha = -9999, beta = 9999):
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Evaluate if endstate reached
         if depth == 0 or steps == []:
@@ -123,14 +123,6 @@ class Heuristic:
 
         return sum
 
-    # Returns a list with free rows
-    def poss_steps(self, board):
-        ret = []
-        for i in range(len(board[1])):
-            if board[0][i]==" ":
-                ret.append(i)
-        return map(lambda x:x+1, ret)
-
 class NN_Heuristic:
     def __init__(self):
         # Alpha-Beta depth, that should be even number
@@ -150,7 +142,7 @@ class NN_Heuristic:
     # Started as MinMax using Alpha-Beta search
     def minmax(self, board, depth, player, maximizingPlayer = True, alpha = -9999, beta = 9999):
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Evaluate if endstate reached
         if depth == 0 or steps == []:
@@ -234,11 +226,3 @@ class NN_Heuristic:
         predict = self.MLP_classifier.predict_proba(board.getData())
         
         return (predict[0][2] - predict[0][0])
-
-    # Returns a list with free rows
-    def poss_steps(self, board):
-        ret = []
-        for i in range(len(board[1])):
-            if board[0][i]==" ":
-                ret.append(i)
-        return map(lambda x:x+1, ret)

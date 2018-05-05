@@ -118,3 +118,11 @@ class Board:
             if (board[row-1][col-1] == symbol):
                 board[row-1][col-1] = " "
                 break
+
+    # Returns a list with free rows
+    def poss_steps(self, board):
+        ret = []
+        for i in range(len(board[1])):
+            if board[0][i]==" ":
+                ret.append(i)
+        return map(lambda x:x+1, ret)

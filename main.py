@@ -1,7 +1,6 @@
 import board as connect_four
 import rule as connect_four_rule
 import heuristic as connect_four_heuristic
-# import nn
 
 def main():
     print("--------------------------------------")

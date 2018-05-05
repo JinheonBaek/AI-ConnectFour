@@ -16,7 +16,7 @@ class Rule:
         next_player = "X" if player == "O" else "O"
         
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Rule 1 (내 승리 조건 확인하기)
         for step in steps:
@@ -29,7 +29,7 @@ class Rule:
             board.uninsert(board.get(), step, player)
 
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Rule 2 (상대방 승리 조건 막기)
         for step in steps:
@@ -42,7 +42,7 @@ class Rule:
             board.uninsert(board.get(), step, next_player)
 
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Rule 3 (상대방이 Row 상에 연속된 3개의 돌을 구현하는 것을 막기)
         # Rule 3 (Row 상에 연속된 3개의 돌이 있고, 양 옆 공간이 비어있는 상황을 미연에 방지하기 위함임)
@@ -56,7 +56,7 @@ class Rule:
             board.uninsert(board.get(), step, next_player)
 
         # Get all possible steps
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
 
         # Rule 4 (내가 Row 상에 연속된 3개의 돌을 두기)
         # Rule 4 (Rule 3 과 비슷한 아이디어에서 도출, 내가 유리한 조건 끌어내기)
@@ -76,7 +76,7 @@ class Rule:
         
         # Rule 5 (Some eval function)
         # Rule 5 (Add double check condition)
-        steps = self.poss_steps(board.get())
+        steps = board.poss_steps(board.get())
         
         for step in steps:
             board.insert(board.get(), step, player)
@@ -93,7 +93,13 @@ class Rule:
 
             board.uninsert(board.get(), step, player)
 
-        return bestStep, 5
+            return bestStep, 5
+
+        # Rule 6 (Control Exception)
+        steps = board.pass_steps(board.get())
+        
+        for step in steps:
+            return step, 6
     
     def row_check(self, board, step, symbol, connectNum):
         # Init
@@ -162,11 +168,3 @@ class Rule:
         value -= board.check(board.get(), next_player, 2) * 3
 
         return value
-
-    # Returns a list with free rows
-    def poss_steps(self, board):
-        ret = []
-        for i in range(len(board[1])):
-            if board[0][i]==" ":
-                ret.append(i)
-        return map(lambda x:x+1, ret)
