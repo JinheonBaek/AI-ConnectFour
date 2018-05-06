@@ -159,12 +159,12 @@ class Rule:
     # Rule evaluate function
     # 내가 돌을 놓은 다음 상황에서,
     # 1) 내 돌이 3개 연속인 경우 * 3 의 Weight 를 준다
-    # 2) 상대방의 돌이 2개 연속인 경우 * 3 의 Weight 를 준다. (상대방이 돌을 놓아 3개가 만들어질 경우에 대해 미리 방지)
+    # 2) 상대방의 돌이 2개 연속인 경우 * 2 의 Weight 를 준다. (상대방이 돌을 놓아 3개가 만들어질 경우에 대해 미리 방지)
     # 3) 내 돌이 2개 연속인 경우 * 1 의 Weight 를 준다.
     def evaluate(self, board, player):
         next_player = "X" if player == "O" else "O"
 
         value = board.check(board.get(), player, 3) * 3 + board.check(board.get(), player, 2) * 1
-        value -= board.check(board.get(), next_player, 2) * 3
+        value -= board.check(board.get(), next_player, 2) * 2
 
         return value

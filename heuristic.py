@@ -2,7 +2,7 @@ import pickle
 
 class Heuristic:
     def __init__(self):
-        # Alpha-Beta depth, that should be even number
+        # Search depth, that should be even number
         self.depth = 6
         # This heuristic assigns each field the number of possible connections with itself and size 4
         self.evaluationTable = [[3, 4, 5, 7, 5, 4, 3], 
@@ -119,13 +119,13 @@ class Heuristic:
         # 2) 상대방의 돌이 2개 연속인 경우 * 3 의 - Weight 를 준다. (상대방이 돌을 놓아 3개가 만들어질 경우에 대해 미리 방지)
         # 3) 내 돌이 2개 연속인 경우 * 1 의 Weight 를 준다.
         sum += board.check(board.get(), player1, 3) * 3 + board.check(board.get(), player1, 2) * 1
-        sum -= board.check(board.get(), player2, 2) * 3
+        sum -= board.check(board.get(), player2, 2) * 2
 
         return sum
 
 class NN_Heuristic:
     def __init__(self):
-        # Alpha-Beta depth, that should be even number
+        # Search depth, that should be even number
         self.depth = 6
 
         # Load MLP Classifier
