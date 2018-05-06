@@ -116,7 +116,7 @@ def firstMove(board):
     print("First move")
     board.insert(board.get(), 3, "O", _print = True)
 
-# Gets Compurse's play mode
+# Gets computer's play mode
 def getMode():
     print("--------------------------------------")
     print("--- AI's turn                      ---")
